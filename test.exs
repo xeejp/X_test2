@@ -16,6 +16,10 @@ defmodule Test2 do
     {:ok, %{"data" => state}}
   end
 
+  def handle_received(data, %{"action" => "redirect", "id" => id, "xid" => xid}) do
+    {:ok, %{"data" => data, "redirect" => %{ id => xid }}}
+  end
+
   def handle_received(%{"host" => host, "participant" => _participant} = state, received) do
     data = %{state | "host" => List.insert_at(host, -1, received)}
     {:ok, %{"data" => data, "host" => data["host"]}}
